@@ -17,12 +17,6 @@ const io = socketio(server, {
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-// Request logger
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
 // Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -31,13 +25,7 @@ app.get('/', (req, res) => {
 // Socket.io configuration
 require('./server/config/socketConfig')(io);
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
